@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanmay Vijay Sherkar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Pirata+One&family=Cinzel:wght@400..900&family=Merriweather:wght@300;400;700;900&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style type="text/tailwindcss">
+        @import "tailwindcss";
+
+        @theme {
+            --font-merriweather: "Merriweather", serif;
+            --font-pirata: "Pirata One", system-ui;
+            --font-cinzel: "Cinzel", serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="w-full bg-black">
+        <div class="parent relative w-full h-[700vh]">
+            <div class="w-full canva sticky top-0 left-0 h-screen">
+                <canvas class="w-full h-screen" id="frame"></canvas>
+
+                <div
+                    class="hero absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center text-white z-10 pointer-events-none font-merriweather overflow-hidden">
+                    <h1 class="font-bold text-7xl text-center leading-tight font-merriweather">Watch me come into
+                        <br> focus as you scroll
+                    </h1>
+                    <p class="text-center mt-4 ">I build interfaces that move with intention. Every animation serves a
+                        purpose, every frame<br>tells the story of what happens next.</p>
+                </div>
+
+                <div id="nav"
+                    class="absolute top-5 left-2 w-full p-4 flex justify-between items-center text-white z-20">
+                    <h2 class="text-5xl font-bold font-pirata overflow-hidden text-[#147298]">Tanmay01-D3V</h2>
+                    <i class="ri-menu-unfold-2-line text-2xl cursor-pointer pointer-events-auto"></i>
+                </div>
+
+                <div id="menu" class="absolute top-[25%] left-0 flex flex-col items-start gap-10 text-white pl-8">
+                    <h4
+                        class="text-3xl font-extrabold cursor-pointer hover:underline decoration-2 underline-offset-8 font-cinzel text-[#FF5314]">
+                        Home
+                    </h4>
+                    <h4
+                        class="text-3xl font-extrabold cursor-pointer hover:underline decoration-2 underline-offset-8 font-cinzel text-[#FF5314]">
+                        About
+                    </h4>
+                    <h4
+                        class="text-3xl font-extrabold cursor-pointer hover:underline decoration-2 underline-offset-8 font-cinzel text-[#FF5314]">
+                        Projects</h4>
+                    <h4
+                        class="text-3xl font-extrabold cursor-pointer hover:underline decoration-2 underline-offset-8 font-cinzel text-[#FF5314]">
+                        Skills
+                    </h4>
+                    <h4
+                        class="text-3xl font-extrabold cursor-pointer hover:underline decoration-2 underline-offset-8 font-cinzel text-[#FF5314]">
+                        Contact
+                        Me</h4>
+                    <h4
+                        class="text-3xl font-extrabold cursor-pointer hover:underline decoration-2 underline-offset-8 font-cinzel text-[#FF5314]">
+                        Tech
+                        Stack</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"
+        integrity="sha512-NcZdtrT77bJr4STcmsGAESr06BYGE8woZdSdEgqnpyqac7sugNO+Tr4bGwGF3MsnEkGKhU2KL2xh6Ec+BqsaHA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/ScrollTrigger.min.js"
+        integrity="sha512-P2IDYZfqSwjcSjX0BKeNhwRUH8zRPGlgcWl5n6gBLzdi4Y5/0O4zaXrtO4K9TZK6Hn1BenYpKowuCavNandERg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
