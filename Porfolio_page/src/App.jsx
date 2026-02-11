@@ -2,11 +2,42 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useGSAP } from '@gsap/react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { OrbitControls, useTexture } from '@react-three/drei';
+import * as THREE from 'three';
+import { Bloom, EffectComposer } from "@react-three/postprocessing";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
+function Cylinder(props) {
+  const ref = useRef();
+  const tex = useTexture("/Frame 2.png");
+  tex.wrapS = THREE.RepeatWrapping;
+  tex.repeat.set(1, 1);
+
+  useFrame((state, delta) => (ref.current.rotation.y += delta * 0.3));
+  return (
+    <group rotation={[0, 1, 0.2]}>
+      <mesh {...props} ref={ref}>
+        <cylinderGeometry args={[13, 13, 10, 60, 60, true]} />
+        <meshStandardMaterial
+          map={tex}
+          emissiveMap={tex}
+          emissive={new THREE.Color("white")}
+          emissiveIntensity={0.1}
+          transparent
+          side={THREE.DoubleSide}
+          roughness={0.5}
+          metalness={0.5}
+        />
+      </mesh>
+    </group>
+  );
+}
+
 function App() {
-  const canvasRef = useRef(null);
+  const frameCanvasRef = useRef(null);
   const heroRef = useRef(null);
   const menuItemsRef = useRef([]);
   const nameRef = useRef(null);
@@ -28,7 +59,7 @@ function App() {
         trigger: ".parent",
         start: "25% top",
         end: "40% top",
-        scrub: 2,
+        scrub: true,
       }
     });
 
@@ -55,8 +86,8 @@ function App() {
             loadImage(frames.current.currentIndex);
             startAnimation();
 
-            gsap.set(canvasRef.current, { opacity: 0 });
-            gsap.to(canvasRef.current, { opacity: 1, duration: 3, ease: "power4.out" });
+            gsap.set(frameCanvasRef.current, { opacity: 0 });
+            gsap.to(frameCanvasRef.current, { opacity: 1, duration: 3, ease: "power4.out" });
           }
         };
         images.current.push(img);
@@ -64,7 +95,7 @@ function App() {
     };
 
     const loadImage = (index) => {
-      const canvas = canvasRef.current;
+      const canvas = frameCanvasRef.current;
       if (!canvas) return;
       const context = canvas.getContext("2d");
       const img = images.current[index - 1];
@@ -97,7 +128,7 @@ function App() {
           trigger: ".parent",
           start: "top top",
           end: "bottom bottom",
-          scrub: 3,
+          scrub: true,
         },
         onUpdate: function () {
           loadImage(Math.floor(frames.current.currentIndex));
@@ -114,7 +145,7 @@ function App() {
           trigger: "#Page2",
           start: "top top",
           end: () => `+=${scrollerRef.current.scrollWidth}`,
-          scrub: 2,
+          scrub: true,
           pin: true,
           invalidateOnRefresh: true,
         }
@@ -136,7 +167,7 @@ function App() {
           trigger: ".parent",
           start: "5% top",
           end: "25% top",
-          scrub: 2,
+          scrub: true,
         },
       });
 
@@ -148,7 +179,7 @@ function App() {
           trigger: ".parent",
           start: "5% top",
           end: "25% top",
-          scrub: 2,
+          scrub: true,
         },
       });
     }
@@ -167,7 +198,7 @@ function App() {
     <div className="w-full bg-black min-h-screen">
       <div className="parent relative w-full h-[700vh]">
         <div className="w-full canva sticky top-0 left-0 h-screen">
-          <canvas ref={canvasRef} className="w-full h-screen" id="frame"></canvas>
+          <canvas ref={frameCanvasRef} className="w-full h-screen" id="frame"></canvas>
 
           <div
             ref={heroRef}
@@ -209,8 +240,29 @@ function App() {
       <div id="Page2" className="w-full h-screen bg-black overflow-hidden flex items-center">
         <div ref={scrollerRef} className="Scroller w-fit h-screen bg-black overflow-hidden flex items-center flex-nowrap shrink-0">
           <h1 className="text-[37vw] text-[#FF5314] font-merriweather drop-shadow-[2px_2px_4px_rgba(0,0,0,0.5)] uppercase whitespace-nowrap inline-block px-20">Projects</h1>
-          <img src="/Frame 2.png" alt="Frame 2" className="h-screen w-auto max-w-none px-20" />
+          <img
+            src="/Frame 2.png"
+            alt="Frame 2"
+            className="h-screen w-auto max-w-none px-20"
+            onLoad={() => ScrollTrigger.refresh()}
+          />
         </div>
+      </div>
+      <div id="Page3" className="w-full h-screen bg-black overflow-hidden flex items-center justify-center">
+        <Canvas camera={{ position: [0, 0, 23] }}>
+          <EffectComposer>
+            <Bloom
+              intensity={0.8}
+              luminanceThreshold={0.2}
+              luminanceSmoothing={0.01}
+            />
+          </EffectComposer>
+
+          <ambientLight intensity={3} />
+          <Cylinder position={[0, 2, 0]} rotation={[0, 0, 0]} />
+          <OrbitControls enableZoom={false} />
+
+        </Canvas>
       </div>
     </div>
   );
