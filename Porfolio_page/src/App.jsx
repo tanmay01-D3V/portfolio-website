@@ -10,6 +10,7 @@ function App() {
   const heroRef = useRef(null);
   const menuItemsRef = useRef([]);
   const nameRef = useRef(null);
+  const scrollerRef = useRef(null);
 
   const frames = useRef({
     currentIndex: 1,
@@ -106,16 +107,19 @@ function App() {
 
     preloadImages();
 
-    gsap.to("#Page2 h1, #Page2 img", {
-      x: "-70%",
-      scrollTrigger: {
-        trigger: "#Page2",
-        start: "top 0%",
-        end: "top -250%",
-        scrub: 2,
-        pin: true,
-      }
-    });
+    if (scrollerRef.current) {
+      gsap.to(scrollerRef.current, {
+        x: () => -(scrollerRef.current.scrollWidth - window.innerWidth),
+        scrollTrigger: {
+          trigger: "#Page2",
+          start: "top top",
+          end: () => `+=${scrollerRef.current.scrollWidth}`,
+          scrub: 2,
+          pin: true,
+          invalidateOnRefresh: true,
+        }
+      });
+    }
 
     if (nameRef.current) {
       const text = nameRef.current.textContent;
@@ -203,8 +207,10 @@ function App() {
         </div>
       </div>
       <div id="Page2" className="w-full h-screen bg-black overflow-hidden flex items-center">
-        <h1 className="text-[37vw] text-[#FF5314] font-merriweather drop-shadow-[2px_2px_4px_rgba(0,0,0,0.5)] uppercase whitespace-nowrap inline-block">Projects</h1>
-        <img src="public/Frame 1.png" alt="Frame 1" className="h-screen w-auto max-w-none" />
+        <div ref={scrollerRef} className="Scroller w-fit h-screen bg-black overflow-hidden flex items-center flex-nowrap shrink-0">
+          <h1 className="text-[37vw] text-[#FF5314] font-merriweather drop-shadow-[2px_2px_4px_rgba(0,0,0,0.5)] uppercase whitespace-nowrap inline-block px-20">Projects</h1>
+          <img src="/Frame 2.png" alt="Frame 2" className="h-screen w-auto max-w-none px-20" />
+        </div>
       </div>
     </div>
   );
