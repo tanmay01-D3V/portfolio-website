@@ -41,7 +41,7 @@ function Cylinder(props) {
 
 function SmileyModel() {
   const mask = useTexture("/smile.jpg");
-  const videoTexture = useVideoTexture("/lv_7568434162294803717_20260214155317.mp4", {
+  const videoTexture = useVideoTexture("https://res.cloudinary.com/dqtxm0xb2/video/upload/v1771077404/lv_7568434162294803717_20260214155317_za7mou.mp4", {
     muted: true,
     loop: true,
     start: true,

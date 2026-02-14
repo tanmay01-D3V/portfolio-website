@@ -13,7 +13,7 @@ export default class Models {
             {
                 id: 'smile',
                 mask: 'smile.jpg',
-                video: 'lv_7568434162294803717_20260214155317.mp4'
+                video: 'https://res.cloudinary.com/dqtxm0xb2/video/upload/v1771077404/lv_7568434162294803717_20260214155317_za7mou.mp4'
             },
         ]
         this.grids_config.forEach((config, index) => this.createMask(config, index))
@@ -55,7 +55,7 @@ export default class Models {
 
     createVideoTexture(config) {
         this.video = document.createElement('video')
-        this.video.src = `/${config.video}`
+        this.video.src = config.video
         this.video.crossOrigin = 'anonymous'
         this.video.loop = true
         this.video.muted = true
@@ -122,7 +122,7 @@ export default class Models {
     }
 
     initInteractions() {
-        this.current = 'smile' 
+        this.current = 'smile'
         this.old = null
         this.is_animating = false
         this.duration = 1
@@ -135,9 +135,9 @@ export default class Models {
 
     update() {
         if (this.is_ready) {
-        this.group.children.forEach((model, index) => {
-            model.position.z = Math.sin(Date.now() * 0.005 + index * 0.1) * 0.6
-        })
-    }
+            this.group.children.forEach((model, index) => {
+                model.position.z = Math.sin(Date.now() * 0.005 + index * 0.1) * 0.6
+            })
+        }
     }
 }
